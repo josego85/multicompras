@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Ventas extends SMG_Controller {
+class Ventas extends S_Controller {
 	/**
 	 * Manejo de ventas para 4s.
 	 * @author Juan Bauer

@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "appclient/load";
+$route['default_controller'] = "";
 $route['404_override'] = '';
 
 

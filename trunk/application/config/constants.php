@@ -41,12 +41,6 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
  */
 define('LOGGED', 'logged');
 /**
- * Estado activo
- * @var string
- */
-define('E_ACTIVO','activo');
-/* End of file constants.php */
-/**
  * Nombre de la variable de vida de session
  * @var string
  */

@@ -4,7 +4,7 @@
  * Todos los controladores que tienen funcionalidades en comun haran un extends de este controlador
  * @author Juan Bauer
  */
-class SMG_Controller extends CI_Controller{
+class S_Controller extends CI_Controller{
 	
 	
 	

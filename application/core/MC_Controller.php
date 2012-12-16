@@ -28,13 +28,13 @@ class MC_Controller extends CI_Controller{
         $this->load->library('session');
         $this->load->model('seguridad_m');
         
-        if ($this->session->userdata('logged')===true && $this->seguridad_m->logged() === true){
+      /* if ($this->session->userdata('logged')===true && $this->seguridad_m->logged() === true){
         	$this->seguridad_m->keepAlive();
         }else{
         	echo json_encode(array('success'=>false,'mensaje'=>'La session ha expirado!'));
     		die();
         }
-        
+        */
         
     }
     

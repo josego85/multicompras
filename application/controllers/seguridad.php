@@ -19,13 +19,13 @@ class Seguridad extends CI_Controller {
 	 * 
 	 * @return true or false
 	 */
-	public function login(){
-		$p_user = $this->input->post('usuario');
-		$p_password = $this->input->post('password');
-		if($this->seguridad->login($p_user,$p_password)===true)
-			$v_output = array("success"=>true, "datos_usuario"=>$this->seguridad->getDatosUsuario(), "mensaje"=>'');
+	public function login($p_email, $p_password){
+		//$p_email = $this->input->post('email');
+		//$p_password = $this->input->post('password');
+		if($this->seguridad->login($p_email,$p_password)===true)
+			$v_output = array("success"=>true, "mensaje"=>'xD');
 		else
-			$v_output = array("success"=>false, "mensaje"=>'');
+			$v_output = array("success"=>false, "mensaje"=>'no entro!');
 			
 		$v_data = array('p_output'=>$v_output);	//encapsula el array en otro array para que la vista pueda procesarlo como array
 		$this->load->view('output', $v_data);
@@ -37,7 +37,7 @@ class Seguridad extends CI_Controller {
 	 */	
 	public function logout(){
 		$this->seguridad->logout();
-		$v_output = array("success"=>true, "mensaje"=>'');
+		$v_output = array("success"=>true, "mensaje"=>'usted salio');
 		$v_data = array('p_output'=>$v_output);	//encapsula el array en otro array para que la vista pueda procesarlo como array
 		$this->load->view('output', $v_data);
 	}

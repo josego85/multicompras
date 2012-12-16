@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Productos extends SMG_Controller {
+class Productos extends MC_Controller {
 	/**
-	 * Manejo de productos para 4s.
+	 * Manejo de productos para mc.
 	 * @author Juan Bauer
 	 */
 	
@@ -10,6 +10,10 @@ class Productos extends SMG_Controller {
 		parent::__construct();
 		$this->load->model('productos_m','productos');
 	}	
+	
+	public function index(){
+		echo "hola mundo!";
+	}
 	
 	/**
 	 * Metodo para traer lista de productos

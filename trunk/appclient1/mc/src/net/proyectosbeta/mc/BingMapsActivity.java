@@ -32,7 +32,7 @@ import android.view.View.OnClickListener;
 import android.widget.ViewFlipper;
 import android.widget.ZoomButton;
 
-public class MainActivity extends Activity {
+public class BingMapsActivity extends Activity{
 	private BingMapsView bingMapsView;
 	private GPSManager _GPSManager;
 	private EntityLayer _gpsLayer;
@@ -237,5 +237,4 @@ public class MainActivity extends Activity {
 		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 		}	
 	}
-
 }

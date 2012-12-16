@@ -1,85 +1,71 @@
-CREATE DATABASE  IF NOT EXISTS `mc` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `mc`;
--- MySQL dump 10.13  Distrib 5.5.28, for debian-linux-gnu (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 3.4.10.1deb1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: mc
--- ------------------------------------------------------
--- Server version	5.5.28-0ubuntu0.12.04.2
+-- Servidor: localhost
+-- Tiempo de generación: 15-12-2012 a las 23:44:10
+-- Versión del servidor: 5.5.28
+-- Versión de PHP: 5.3.10-1ubuntu3.4
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `productos`
+-- Base de datos: `mc`
 --
 
-DROP TABLE IF EXISTS `productos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `productos` (
-  `producto_id` int(11) NOT NULL AUTO_INCREMENT,
-  `producto_nombre` varchar(45) DEFAULT NULL,
-  `producto_descripcion` varchar(250) DEFAULT NULL,
-  `producto_imagen` varchar(45) DEFAULT NULL,
-  `producto_precio` float DEFAULT NULL,
-  PRIMARY KEY (`producto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `productos`
+-- Estructura de tabla para la tabla `clientes`
 --
 
-LOCK TABLES `productos` WRITE;
-/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `cliente_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_nombre` varchar(45) DEFAULT NULL,
+  `cliente_apellido` varchar(45) DEFAULT NULL,
+  `cliente_email` varchar(45) DEFAULT NULL,
+  `cliente_password` varchar(45) DEFAULT NULL,
+  `cliente_nro_movil` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`cliente_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Table structure for table `d_pedidos`
+-- Volcado de datos para la tabla `clientes`
 --
 
-DROP TABLE IF EXISTS `d_pedidos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `d_pedidos` (
+INSERT INTO `clientes` (`cliente_id`, `cliente_nombre`, `cliente_apellido`, `cliente_email`, `cliente_password`, `cliente_nro_movil`) VALUES
+(1, 'Juan', 'Bauer', 'bauerpy', '123', '595981884535');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `d_pedidos`
+--
+
+CREATE TABLE IF NOT EXISTS `d_pedidos` (
   `producto_id` int(11) NOT NULL,
   `pedido_id` int(11) NOT NULL,
   `d_pedido_monto` float DEFAULT NULL,
   `d_pedido_observacion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`producto_id`,`pedido_id`),
   KEY `fk_d_pedidos_productos1` (`producto_id`),
-  KEY `fk_d_pedidos_pedidos1` (`pedido_id`),
-  CONSTRAINT `fk_d_pedidos_productos1` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`producto_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_d_pedidos_pedidos1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`pedido_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_d_pedidos_pedidos1` (`pedido_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `d_pedidos`
+-- Estructura de tabla para la tabla `pedidos`
 --
 
-LOCK TABLES `d_pedidos` WRITE;
-/*!40000 ALTER TABLE `d_pedidos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `d_pedidos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pedidos`
---
-
-DROP TABLE IF EXISTS `pedidos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pedidos` (
+CREATE TABLE IF NOT EXISTS `pedidos` (
   `pedido_id` int(11) NOT NULL AUTO_INCREMENT,
   `pedido_envio_direccion` varchar(250) DEFAULT NULL,
   `pedido_envio_lat` float DEFAULT NULL,
@@ -88,54 +74,79 @@ CREATE TABLE `pedidos` (
   `pedido_monto` float DEFAULT NULL,
   `cliente_id` int(11) NOT NULL,
   PRIMARY KEY (`pedido_id`),
-  KEY `fk_pedidos_clientes1` (`cliente_id`),
-  CONSTRAINT `fk_pedidos_clientes1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `fk_pedidos_clientes1` (`cliente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `pedidos`
+-- Estructura de tabla para la tabla `productos`
 --
 
-LOCK TABLES `pedidos` WRITE;
-/*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE IF NOT EXISTS `productos` (
+  `producto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `producto_nombre` varchar(45) DEFAULT NULL,
+  `producto_descripcion` varchar(250) DEFAULT NULL,
+  `producto_imagen` varchar(45) DEFAULT NULL,
+  `producto_precio` float DEFAULT NULL,
+  `cliente_id` int(11) NOT NULL,
+  PRIMARY KEY (`producto_id`),
+  KEY `fk_productos_clientes1` (`cliente_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Table structure for table `clientes`
+-- Volcado de datos para la tabla `productos`
 --
 
-DROP TABLE IF EXISTS `clientes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `clientes` (
-  `cliente_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cliente_nombre` varchar(45) DEFAULT NULL,
-  `cliente_apellido` varchar(45) DEFAULT NULL,
-  `cliente_mail` varchar(45) DEFAULT NULL,
-  `cliente_password` varchar(45) DEFAULT NULL,
-  `cliente_nro_movil` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`cliente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `productos` (`producto_id`, `producto_nombre`, `producto_descripcion`, `producto_imagen`, `producto_precio`, `cliente_id`) VALUES
+(1, 'pizza 1', 'pizza grande', 'pizza1', 20000, 0),
+(2, 'pizza 2', 'pizza mas grande que la anterior', 'pizza2', 25000, 0);
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `clientes`
+-- Estructura de tabla para la tabla `sessions`
 --
 
-LOCK TABLES `clientes` WRITE;
-/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+CREATE TABLE IF NOT EXISTS `sessions` (
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(16) NOT NULL DEFAULT '0',
+  `user_agent` varchar(50) NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` text NOT NULL,
+  PRIMARY KEY (`session_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Volcado de datos para la tabla `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
+('d21c47c7a0f6e32fa8c615c6a7891759', '127.0.0.1', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:16.0) G', 1355624909, 'a:3:{s:6:"logged";b:1;s:7:"cliente";O:8:"stdClass":2:{s:13:"cliente_email";s:7:"bauerpy";s:10:"cliente_id";s:1:"1";}s:12:"session_live";i:1355624909;}');
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `d_pedidos`
+--
+ALTER TABLE `d_pedidos`
+  ADD CONSTRAINT `fk_d_pedidos_productos1` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`producto_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_d_pedidos_pedidos1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`pedido_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD CONSTRAINT `fk_pedidos_clientes1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD CONSTRAINT `fk_productos_clientes1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`cliente_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2012-12-15 17:26:49

@@ -3,6 +3,7 @@ package net.proyectosbeta.mc;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,8 +64,9 @@ public class SingleMenuItemActivity extends Activity{
 	 } // Fin dek metodo publico onCreate.
 	
 	 public void aceptar() {
-		 Toast t = Toast.makeText(SingleMenuItemActivity.this,"Mapa Bing", Toast.LENGTH_SHORT);
-	     t.show();
+	     // Ir al Intent BingMapsActivity.
+         Intent in = new Intent(getApplicationContext(), BingMapsActivity.class);
+         startActivity(in);
 	 }
 	    
 	 public void cancelar() {

@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 import android.widget.ZoomButton;
 
@@ -180,6 +181,7 @@ public class BingMapsActivity extends Activity{
 				return true;
 			//Search Menu Item
 			case R.id.searchMenuBtn:
+				Toast.makeText(BingMapsActivity.this, "Entro Mapa Bing", Toast.LENGTH_SHORT).show();
 				DialogLauncher.LaunchSearchDialog(this, bingMapsView, loadingScreenHandler);
 				return true;	
 			//Directions Menu Item

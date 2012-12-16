@@ -18,8 +18,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
  
 import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ListaProductosActivity extends Activity{
@@ -31,7 +38,7 @@ public class ListaProductosActivity extends Activity{
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_productos);
         
-        listaProductos = (ListView)findViewById(R.id.listViewListaProductos);
+        listaProductos = (ListView)findViewById(R.id.listview);
         
         // Hashmap for ListView.
         ArrayList<HashMap<String, String>> productList = new ArrayList<HashMap<String, String>>();
@@ -87,13 +94,6 @@ public class ListaProductosActivity extends Activity{
     	                String producto_precio = c.getString("producto_precio");
     	                String cliente_id = c.getString("cliente_id");
     	                
-    	                Toast.makeText(ListaProductosActivity.this, "producto_id" + producto_id, Toast.LENGTH_SHORT).show();   
-    	                Toast.makeText(ListaProductosActivity.this, "producto_nombre" + producto_nombre, Toast.LENGTH_SHORT).show();   
-    	                Toast.makeText(ListaProductosActivity.this, "producto_descripcion" + producto_descripcion, Toast.LENGTH_SHORT).show();   
-    	                Toast.makeText(ListaProductosActivity.this, "producto_imagen" + producto_imagen, Toast.LENGTH_SHORT).show();   
-    	                Toast.makeText(ListaProductosActivity.this, "producto_precio" + producto_precio, Toast.LENGTH_SHORT).show();   
-    	                Toast.makeText(ListaProductosActivity.this, "cliente_id" + cliente_id, Toast.LENGTH_SHORT).show();   
-    	                
     	                // Creating new HashMap.
     	                HashMap<String, String> map = new HashMap<String, String>();
     	 
@@ -108,6 +108,50 @@ public class ListaProductosActivity extends Activity{
     	                // Adding HashList to ArrayList.
     	                productList.add(map);   
     	            }
+    	            
+    	            // Keys used in Hashmap.
+    	            String[] from = { "producto_id","producto_nombre","producto_descripcion", "producto_imagen", "producto_precio",  
+    	            		"cliente_id"};
+    	            //String[] from = {"producto_nombre","producto_descripcion"};
+    	            
+    	            // Ids of views in listview_layout.
+    	            int[] to = { R.id.producto_id, R.id.producto_nombre, R.id.producto_descripcion, R.id.producto_imagen,
+    	            		R.id.producto_precio, R.id.cliente_id};        
+    	            //int[] to = {R.id.producto_nombre, R.id.producto_descripcion}; 
+    	            
+    	            // Instantiating an adapter to store each items
+    	            // R.layout.listview_layout defines the layout of each item.
+    	            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), productList, R.layout.listview_layout, from, to);
+    	            
+    	            // Getting a reference to listview of main.xml layout file.
+    	            listaProductos = (ListView)findViewById(R.id.listview);
+    	            
+    	            // Setting the adapter to the listView
+    	            listaProductos.setAdapter(adapter);      
+    	            
+    	            // Launching new screen on Selecting Single ListItem
+    	            listaProductos.setOnItemClickListener(new OnItemClickListener() {
+    	                @Override
+    	                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    	                    // Getting values from selected ListItem.
+    	                    String producto_id = ((TextView) view.findViewById(R.id.producto_id)).getText().toString();
+    	                    String producto_nombre = ((TextView) view.findViewById(R.id.producto_nombre)).getText().toString();
+    	                    String producto_description = ((TextView) view.findViewById(R.id.producto_descripcion)).getText().toString();
+    	                    String producto_imagen = ((TextView) view.findViewById(R.id.producto_imagen)).getText().toString();
+    	                    String producto_precio = ((TextView) view.findViewById(R.id.producto_precio)).getText().toString();
+    	                    String cliente_id = ((TextView) view.findViewById(R.id.cliente_id)).getText().toString();
+    	     
+    	                    // Starting new intent.
+    	                    Intent in = new Intent(getApplicationContext(), SingleMenuItemActivity.class);
+    	                    in.putExtra("producto_id", producto_id);
+    	                    in.putExtra("producto_nombre", producto_nombre);
+    	                    in.putExtra("producto_description", producto_description);
+    	                    in.putExtra("producto_imagen", producto_imagen);
+    	                    in.putExtra("producto_precio", producto_precio);
+    	                    in.putExtra("cliente_id", cliente_id);
+    	                    startActivity(in);
+    	                }
+    	            });
     	        } catch (JSONException e) {
     	            e.printStackTrace();
     	        } 
@@ -121,102 +165,5 @@ public class ListaProductosActivity extends Activity{
     	}catch (IOException e) { 
     	    Toast.makeText(ListaProductosActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
     	}   		
-    }
-	
-    public void postData() {
-    	HttpClient httpclient = new DefaultHttpClient();
-    	HttpPost httppost = new HttpPost("http://mc.proyectosbeta.net/productos/listarProductos/");
-    	
-    	try { 
-    		// Add your data
-    		//List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-    	    //nameValuePairs.add(new BasicNameValuePair("username", un.getText().toString()));
-    	    //nameValuePairs.add(new BasicNameValuePair("username", pw.getText().toString()));
-    	    //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-
-    	    HttpResponse response = httpclient.execute(httppost);
-    	    HttpEntity entity = response.getEntity();
-    	    InputStream is = entity.getContent();
-    	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    	    StringBuilder sb = new StringBuilder();
-
-    	    String line = null;
-    	    
-    	    try {
-    	    	while ((line = reader.readLine()) != null) {
-    	    		sb.append((line + "\n"));
-    	    		Toast.makeText(ListaProductosActivity.this, "La linea es: " + line, Toast.LENGTH_LONG).show();
-    	        }
-    	    }catch(IOException e) {
-    	    	e.printStackTrace();
-    	    }finally {
-    	    	try {
-    	    		is.close();
-    	         }catch(IOException e){
-    	        	 e.printStackTrace();
-    	         }
-    	    }
-    	    
-    	    try {
-    	    	String jsonStr = "{'productos':" + sb.toString() + "}";   	     	    
-    	    	JSONObject jsonObject = new JSONObject(jsonStr);
-    	    	
-    	    	// Grabbing the menu object. 
-    	        JSONObject meta = jsonObject.getJSONObject("productos");  
-    	        
-    	        // These 2 are strings.
-    	        String success = meta.getString("success");  
-    	        Toast.makeText(ListaProductosActivity.this, success, Toast.LENGTH_SHORT).show();
-    	        String datos = meta.getString("data");  
-    	        Toast.makeText(ListaProductosActivity.this, datos, Toast.LENGTH_SHORT).show();   
-    	        
-    	        
-    	        // The popop is another JSON object. 
-    	        JSONObject productos = meta.getJSONObject("productos"); 
-    	         
-    	        // Productos JSONArray.
-    	        JSONArray productos1 = null;	
-    	        
-    	        
-    	        try {
-    	            // Getting Array of Contacts
-    	        	productos1 = jsonObject.getJSONArray("data");
-    	         
-    	            // looping through All Productos.
-    	            for(int i = 0; i < productos1.length(); i++){
-    	                JSONObject c = productos1.getJSONObject(i);
-
-    	                // Storing each json item in variable
-    	                String producto_id = c.getString("producto_id");
-    	                String producto_nombre = c.getString("producto_nombre");
-    	                String producto_descripcion = c.getString("producto_descripcion");
-    	                String producto_imagen = c.getString("producto_imagen");
-    	                String producto_precio = c.getString("producto_precio");
-    	                String cliente_id = c.getString("cliente_id");
-    	         
-
-    	         
-    	            }
-    	        } catch (JSONException e) {
-    	            e.printStackTrace();
-    	        }
-    	        
-    	        
-    	        
-    	         
-    	        
-    	    }catch(JSONException e){
-    	    	// TODO Auto-generated catch block
-    	    	e.printStackTrace();
-    	    }   
-    	    //Toast.makeText(HelloWorldActivity.this, sb.toString(), Toast.LENGTH_SHORT).show();
-    	}catch(ClientProtocolException e){
-    		Toast.makeText(ListaProductosActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-    	}catch (IOException e) { 
-    	    Toast.makeText(ListaProductosActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-    	}   	
-    } // Fin del metodo publico postData.
-    
-    
+    }  
 }

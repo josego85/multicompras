@@ -82,7 +82,7 @@ class Seguridad_M extends CI_Model {
 		if($session_live !== FALSE){
 			//verificar que la ultima actividad con el sistema aun no haya caducado
 			if($this->config->item(SESSION_LIVE)< time() - $session_live  ){
-				$this->seguridad->logout();
+				//$this->seguridad->logout();
 				return false;
 			}else{
 				return true;

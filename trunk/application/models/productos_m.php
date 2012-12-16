@@ -17,7 +17,7 @@ class Productos_M extends CI_Model {
 	public function listarProductos($p_id_producto=false){
 		if($p_id_producto!==false)
 			$this->db->where_in('producto_id',$p_id_producto);
-			$v_consulta = $this->db->get('productos');
+		$v_consulta = $this->db->get('productos');
 		return $v_consulta->result_array();
 	}	
 	
@@ -38,15 +38,14 @@ class Productos_M extends CI_Model {
 
 	/**
 	 * Metodo para agregar un nuevo producto
-	 * @param String descripcion del producto
-	 * @param String precio del producto
-	 * @param String categoria del producto
 	 */
-	public function agregarProducto($p_producto_descripcion, $p_producto_precio, $p_cat_producto_id){
+	public function agregarProducto($p_producto_nombre, $p_producto_descripcion, $p_producto_precio, $p_producto_imagen, $p_cliente_id){
 		$datos = array(
    			'producto_precio' => $p_producto_precio,
-   			'cat_producto_id' => $p_cat_producto_id,
-   			'producto_descripcion' => $p_producto_descripcion
+   			'producto_descripcion' => $p_producto_descripcion,
+			'producto_nombre' => $p_producto_nombre,
+			'producto_imagen' => $p_producto_imagen,
+			'cliente_id' => $p_cliente_id
 		);
 		$this->db->insert('productos', $datos);
 

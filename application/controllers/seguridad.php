@@ -27,8 +27,8 @@ class Seguridad extends CI_Controller {
 		else
 			$v_output = array("success"=>false, "mensaje"=>'no entro!');
 			
-		$v_data = array('p_output'=>$v_output);	//encapsula el array en otro array para que la vista pueda procesarlo como array
-		$this->load->view('output', $v_data);
+		$v_data = array('respuesta'=>$v_output);	//encapsula el array en otro array para que la vista pueda procesarlo como array
+		$this->load->view('output', array('p_output'=>$v_data));
 	}
 	
 	/**

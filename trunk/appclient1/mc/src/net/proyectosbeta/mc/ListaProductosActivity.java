@@ -101,22 +101,29 @@ public class ListaProductosActivity extends Activity{
     	                map.put("producto_id", producto_id);
     	                map.put("producto_nombre", producto_nombre);
     	                map.put("producto_descripcion", producto_descripcion);
-    	                map.put("producto_imagen", producto_imagen);
+    	                map.put("producto_imagen", "http://mc.proyectosbeta.net/images/chico/" + producto_imagen);
     	                map.put("producto_precio", producto_precio);
-    	                map.put("cliente_id", cliente_id);
+    	                //map.put("cliente_id", cliente_id);
     	 
     	                // Adding HashList to ArrayList.
     	                productList.add(map);   
     	            }
     	            
     	            // Keys used in Hashmap.
+    	            /*
     	            String[] from = { "producto_id","producto_nombre","producto_descripcion", "producto_imagen", "producto_precio",  
     	            		"cliente_id"};
+    	            		*/
+    	            String[] from = { "producto_id","producto_nombre","producto_descripcion", "producto_imagen", "producto_precio"};
     	            //String[] from = {"producto_nombre","producto_descripcion"};
     	            
     	            // Ids of views in listview_layout.
+    	            /*
     	            int[] to = { R.id.producto_id, R.id.producto_nombre, R.id.producto_descripcion, R.id.producto_imagen,
-    	            		R.id.producto_precio, R.id.cliente_id};        
+    	            		R.id.producto_precio, R.id.cliente_id};
+    	            		*/     
+    	            int[] to = { R.id.producto_id, R.id.producto_nombre, R.id.producto_descripcion, R.id.producto_imagen,
+    	            		R.id.producto_precio};    
     	            //int[] to = {R.id.producto_nombre, R.id.producto_descripcion}; 
     	            
     	            // Instantiating an adapter to store each items

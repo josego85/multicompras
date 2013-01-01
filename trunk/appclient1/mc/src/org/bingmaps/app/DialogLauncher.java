@@ -2,6 +2,7 @@ package org.bingmaps.app;
 
 import java.util.HashMap;
 
+import net.proyectosbeta.mc.BingMapsActivity;
 import net.proyectosbeta.mc.R;
 
 import org.bingmaps.bsds.BingSpatialDataService;
